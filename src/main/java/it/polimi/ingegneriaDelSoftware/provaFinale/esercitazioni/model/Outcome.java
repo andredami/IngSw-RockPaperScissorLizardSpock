@@ -1,4 +1,4 @@
-package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni;
+package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model;
 
 public enum Outcome {
     WIN, LOSE, DRAW;
