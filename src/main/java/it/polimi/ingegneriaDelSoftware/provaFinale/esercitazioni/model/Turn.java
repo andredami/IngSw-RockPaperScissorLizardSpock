@@ -2,38 +2,39 @@ package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model;
 
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.util.Observable;
 
-public class Turn extends Observable<String> {
+public class Turn extends Observable<Turn.Event> {
+
+    public enum Event {
+        PLAYER_CHOICE, CPU_CHOICE, OUTCOME
+    }
     private Choice playerChoice;
-    public static final String FIELD_PLAYER_CHOICE = "playerChoice";
     public Choice getPlayerChoice() {
         return playerChoice;
     }
 
     public void setPlayerChoice(Choice playerChoice) {
         this.playerChoice = playerChoice;
-        setChangedAndNotifyObservers(FIELD_PLAYER_CHOICE);
+        setChangedAndNotifyObservers(Event.PLAYER_CHOICE);
     }
 
     private Choice cpuChoice;
-    public static final String FIELD_CPU_CHOICE = "cpuChoice";
     public Choice getCpuChoice() {
         return cpuChoice;
     }
 
     public void setCpuChoice(Choice cpuChoice) {
         this.cpuChoice = cpuChoice;
-        setChangedAndNotifyObservers(FIELD_CPU_CHOICE);
+        setChangedAndNotifyObservers(Event.CPU_CHOICE);
     }
 
     private Outcome outcome;
-    public static final String FIELD_OUTCOME = "outcome";
     public Outcome getOutcome() {
         return outcome;
     }
 
     public void setOutcome(Outcome outcome) {
         this.outcome = outcome;
-        setChangedAndNotifyObservers(FIELD_OUTCOME);
+        setChangedAndNotifyObservers(Event.OUTCOME);
     }
 
     public void clear() {
@@ -42,7 +43,7 @@ public class Turn extends Observable<String> {
         playerChoice = null;
     }
 
-    private void setChangedAndNotifyObservers(String arg) {
+    private void setChangedAndNotifyObservers(Event arg) {
         setChanged();
         notifyObservers(arg);
     }

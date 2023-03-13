@@ -6,12 +6,14 @@ package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.util;
  *
  * @see     Observable
  *
- * @param <ArgType> the type of the argument passed to the {@code update} method of the observers
+ * @param <SubjectType> the type of the observable object
+ *                     that this observer is observing
+ * @param <Event> the enumeration of the event that this observer is observing
  *
  * @implNote
  * This class is a Generic Implementation of the deprecated {@link java.util.Observer}.
  */
-public interface Observer<SubjectType extends Observable<ArgType>, ArgType> {
+public interface Observer<SubjectType extends Observable<Event>, Event extends Enum<Event>> {
     /**
      * This method is called whenever the observed object is changed. An
      * application calls an {@code Observable} object's
@@ -23,5 +25,5 @@ public interface Observer<SubjectType extends Observable<ArgType>, ArgType> {
      *                 method.
      */
 
-     void update(SubjectType o, ArgType arg);
+     void update(SubjectType o, Event arg);
 }
