@@ -3,14 +3,14 @@ package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.view;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Choice;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Outcome;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.TurnView;
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.util.Observable;
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.util.Observer;
 
 import java.util.Arrays;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class TextualUI extends Observable implements Observer, Runnable {
+public class TextualUI extends Observable<Choice> implements Observer<TurnView, String>, Runnable {
 
     @Override
     public void run() {
@@ -45,20 +45,18 @@ public class TextualUI extends Observable implements Observer, Runnable {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (!(o instanceof TurnView model)){
-            System.err.println("Ignoring updates from " + o);
-            return;
-        }
-
-        if (arg instanceof Choice) {
+    /* FIXME: This is still ugly.
+     * We are still relying on String comparisons to determine the event that triggered the update.
+     */
+    public void update(TurnView model, String arg) {
+        if (arg.equals(TurnView.FIELD_CPU_CHOICE)) {
             /* New choice available */
             showChoices(model);
-        } else if(arg instanceof Outcome) {
+        } else if(arg.equals(TurnView.FIELD_OUTCOME)) {
             /* Outcome ready */
             showOutcome(model);
         } else {
-            System.err.println("Ignoring event from " + o + ": " + arg);
+            System.err.println("Ignoring event from " + model + ": " + arg);
             return;
         }
     }
@@ -84,6 +82,4 @@ public class TextualUI extends Observable implements Observer, Runnable {
         /* Show CPU's choice */
         System.out.println("CPU chose: " + cpuChoice);
     }
-
-
 }
