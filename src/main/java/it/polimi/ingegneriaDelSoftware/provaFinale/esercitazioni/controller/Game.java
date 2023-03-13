@@ -3,13 +3,12 @@ package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.controller;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Choice;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Outcome;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Turn;
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.util.Observer;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.view.TextualUI;
 
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 
-public class Game implements Observer {
+public class Game implements Observer<TextualUI, Choice> {
     private final Turn model;
     private final TextualUI view;
 
@@ -49,17 +48,12 @@ public class Game implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(TextualUI o, Choice arg) {
         if (o != view) {
             System.err.println("Discarding notification from " + o);
             return;
         }
-        if (arg instanceof Choice c) {
-            model.setPlayerChoice(c);
-            play();
-        } else {
-            System.err.println("Discarding event from " + o + ": " + arg);
-            return;
-        }
+        model.setPlayerChoice(arg);
+        play();
     }
 }
