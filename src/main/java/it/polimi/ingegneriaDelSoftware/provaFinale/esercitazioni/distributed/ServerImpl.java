@@ -1,8 +1,6 @@
-package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.rmi;
+package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed;
 
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.controller.Game;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.Client;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.Server;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Choice;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Turn;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.TurnView;
