@@ -12,13 +12,44 @@ import java.util.stream.Collectors;
 
 public class TextualUI extends Observable<Choice> implements Runnable {
 
+    private enum State {
+        WAITING_FOR_PLAYER,
+        WAITING_FOR_OUTCOME
+    }
+
+    private State state = State.WAITING_FOR_PLAYER;
+    private final Object lock = new Object();
+
+    private State getState() {
+        synchronized (lock) {
+            return state;
+        }
+    }
+
+    private void setState(State state) {
+        synchronized (lock) {
+            this.state = state;
+            lock.notifyAll();
+        }
+    }
+
     @Override
     public void run() {
         //noinspection InfiniteLoopStatement
         while (true) {
+            while (getState() == State.WAITING_FOR_OUTCOME) {
+                synchronized (lock) {
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        System.err.println("Interrupted while waiting for server: " + e.getMessage());
+                    }
+                }
+            }
             System.out.println("--- NEW TURN ---");
             /* Player chooses */
             Choice c = askPlayer();
+            setState(State.WAITING_FOR_OUTCOME);
             setChanged();
             notifyObservers(c);
         }
@@ -47,7 +78,10 @@ public class TextualUI extends Observable<Choice> implements Runnable {
     public void update(TurnView model, Turn.Event arg) {
         switch (arg) {
             case CPU_CHOICE -> showChoices(model);
-            case OUTCOME -> showOutcome(model);
+            case OUTCOME -> {
+                showOutcome(model);
+                this.setState(State.WAITING_FOR_PLAYER);
+            }
             default -> System.err.println("Ignoring event from " + model + ": " + arg);
         }
     }

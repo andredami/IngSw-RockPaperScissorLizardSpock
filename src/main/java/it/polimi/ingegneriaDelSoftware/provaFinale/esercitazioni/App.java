@@ -1,8 +1,8 @@
 package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni;
 
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.Server;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.rmi.ClientImpl;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.rmi.ServerImpl;
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.ClientImpl;
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.ServerImpl;
 
 import java.rmi.RemoteException;
 
