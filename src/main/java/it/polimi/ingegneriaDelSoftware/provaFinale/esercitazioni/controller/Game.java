@@ -1,22 +1,21 @@
 package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.controller;
 
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.Client;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Choice;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Outcome;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Turn;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.util.Observer;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.view.TextualUI;
 
 import java.util.Random;
 
-public class Game implements Observer<TextualUI, Choice> {
+public class Game {
     private final Turn model;
-    private final TextualUI view;
+    private final Client client;
 
     private final Random RAND = new Random();
 
-    public Game(Turn model, TextualUI view) {
+    public Game(Turn model, Client client) {
         this.model = model;
-        this.view = view;
+        this.client = client;
     }
 
     private void play() {
@@ -47,9 +46,8 @@ public class Game implements Observer<TextualUI, Choice> {
         };
     }
 
-    @Override
-    public void update(TextualUI o, Choice arg) {
-        if (o != view) {
+    public void update(Client o, Choice arg) {
+        if (o != client) {
             System.err.println("Discarding notification from " + o);
             return;
         }

@@ -5,13 +5,12 @@ import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Outcome;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Turn;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.TurnView;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.util.Observable;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.util.Observer;
 
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class TextualUI extends Observable<Choice> implements Observer<TurnView, Turn.Event>, Runnable {
+public class TextualUI extends Observable<Choice> implements Runnable {
 
     @Override
     public void run() {
@@ -45,7 +44,6 @@ public class TextualUI extends Observable<Choice> implements Observer<TurnView, 
         }
     }
 
-    @Override
     public void update(TurnView model, Turn.Event arg) {
         switch (arg) {
             case CPU_CHOICE -> showChoices(model);

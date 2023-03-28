@@ -1,9 +1,8 @@
 package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni;
 
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.controller.Game;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Turn;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.TurnView;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.view.TextualUI;
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.Server;
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.local.ClientImpl;
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.local.ServerImpl;
 
 /**
  * Hello world!
@@ -12,14 +11,9 @@ import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.view.TextualUI;
 public class App 
 {
     public static void main( String[] args ) {
-        Turn model = new Turn();
-        TurnView modelView = new TurnView(model);
-        TextualUI view = new TextualUI();
-        Game controller = new Game(model, view);
+        Server server = new ServerImpl();
 
-        modelView.addObserver(view);
-        view.addObserver(controller);
-
-        view.run();
+        ClientImpl client = new ClientImpl(server);
+        client.run();
     }
 }

@@ -1,33 +1,30 @@
 package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model;
 
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.util.Observable;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.util.Observer;
+import java.io.Serializable;
 
-public class TurnView extends Observable<Turn.Event> implements Observer<Turn, Turn.Event> {
-    private final Turn model;
+public class TurnView implements Serializable {
+
+    static final long serialVersionUID = 1L;
+
+    private final Choice playerChoice;
+    private final Choice cpuChoice;
+    private final Outcome outcome;
 
     public TurnView(Turn model) {
-        if (model == null) {
-            throw new IllegalArgumentException();
-        }
-        this.model = model;
-        model.addObserver(this);
+        this.playerChoice = model.getPlayerChoice();
+        this.cpuChoice = model.getCpuChoice();
+        this.outcome = model.getOutcome();
     }
+
     public Choice getPlayerChoice() {
-        return model.getPlayerChoice();
+        return this.playerChoice;
     }
 
     public Choice getCpuChoice() {
-        return model.getCpuChoice();
+        return this.cpuChoice;
     }
 
     public Outcome getOutcome() {
-        return model.getOutcome();
-    }
-
-    @Override
-    public void update(Turn o, Turn.Event arg) {
-        setChanged();
-        notifyObservers(arg);
+        return this.outcome;
     }
 }
