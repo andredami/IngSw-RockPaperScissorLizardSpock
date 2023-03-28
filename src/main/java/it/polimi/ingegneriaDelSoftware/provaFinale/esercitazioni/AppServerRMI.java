@@ -1,21 +1,23 @@
 package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni;
 
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.Server;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.rmi.ClientImpl;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.rmi.ServerImpl;
 
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
 
 /**
  * Hello world!
  *
  */
-public class App 
+public class AppServerRMI
 {
     public static void main( String[] args ) throws RemoteException {
         Server server = new ServerImpl();
 
-        ClientImpl client = new ClientImpl(server);
-        client.run();
+        Registry registry = LocateRegistry.getRegistry();
+        registry.rebind("server", server);
     }
 }

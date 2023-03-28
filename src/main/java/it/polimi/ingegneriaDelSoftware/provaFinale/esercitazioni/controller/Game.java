@@ -47,7 +47,7 @@ public class Game {
     }
 
     public void update(Client o, Choice arg) {
-        if (o != client) {
+        if (!o.equals(client)) {
             System.err.println("Discarding notification from " + o);
             return;
         }
