@@ -4,13 +4,12 @@ import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Choice;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Outcome;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Turn;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.TurnView;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.util.Observable;
 
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class TextualUI extends Observable<Choice> implements Runnable {
+public class TextualUI extends UI {
 
     private enum State {
         WAITING_FOR_PLAYER,
@@ -75,6 +74,7 @@ public class TextualUI extends Observable<Choice> implements Runnable {
         }
     }
 
+    @Override
     public void update(TurnView model, Turn.Event arg) {
         switch (arg) {
             case CPU_CHOICE -> showChoices(model);

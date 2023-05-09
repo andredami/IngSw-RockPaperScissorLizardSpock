@@ -2,7 +2,7 @@ package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed;
 
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.Turn;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.model.TurnView;
-import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.view.TextualUI;
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.view.UI;
 
 import java.rmi.RemoteException;
 import java.rmi.server.RMIClientSocketFactory;
@@ -11,24 +11,25 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ClientImpl extends UnicastRemoteObject implements Client, Runnable {
 
-    TextualUI view = new TextualUI();
+    private UI view;
 
-    public ClientImpl(Server server) throws RemoteException {
+    public ClientImpl(Server server, UI ui) throws RemoteException {
         super();
-        initialize(server);
+        initialize(server, ui);
     }
 
-    public ClientImpl(Server server, int port) throws RemoteException {
+    public ClientImpl(Server server, int port, UI ui) throws RemoteException {
         super(port);
-        initialize(server);
+        initialize(server, ui);
     }
 
-    public ClientImpl(Server server, int port, RMIClientSocketFactory csf, RMIServerSocketFactory ssf) throws RemoteException {
+    public ClientImpl(Server server, int port, RMIClientSocketFactory csf, RMIServerSocketFactory ssf, UI ui) throws RemoteException {
         super(port, csf, ssf);
-        initialize(server);
+        initialize(server, ui);
     }
 
-    private void initialize(Server server) throws RemoteException {
+    private void initialize(Server server, UI ui) throws RemoteException {
+        this.view = ui;
         server.register(this);
         view.addObserver((o, arg) -> {
             try {

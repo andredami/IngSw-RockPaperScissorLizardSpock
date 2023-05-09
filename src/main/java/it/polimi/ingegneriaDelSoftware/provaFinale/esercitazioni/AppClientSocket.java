@@ -2,6 +2,9 @@ package it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni;
 
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.ClientImpl;
 import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.distributed.socket.middleware.ServerStub;
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.view.GraphicalUI;
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.view.TextualUI;
+import it.polimi.ingegneriaDelSoftware.provaFinale.esercitazioni.view.UI;
 
 import java.rmi.RemoteException;
 
@@ -12,8 +15,16 @@ import java.rmi.RemoteException;
 public class AppClientSocket
 {
     public static void main( String[] args ) throws RemoteException {
+        UI ui;
+        if (args.length > 0 && args[0].equals("text")) {
+            ui = new TextualUI();
+        } else {
+            ui = new GraphicalUI();
+        }
+
+
         ServerStub serverStub = new ServerStub("localhost", 1234);
-        ClientImpl client = new ClientImpl(serverStub);
+        ClientImpl client = new ClientImpl(serverStub, ui);
         new Thread() {
             @Override
             public void run() {
