@@ -21,6 +21,7 @@ import java.util.concurrent.Executors;
 public class AppServerImpl extends UnicastRemoteObject implements AppServer
 {
 
+    public static final int RMI_PORT = 1099;
     private static AppServerImpl instance;
 
     private final ExecutorService executorService = Executors.newCachedThreadPool();
@@ -73,7 +74,7 @@ public class AppServerImpl extends UnicastRemoteObject implements AppServer
     private static void startRMI() throws RemoteException {
         AppServerImpl server = getInstance();
 
-        Registry registry = LocateRegistry.getRegistry();
+        Registry registry = LocateRegistry.createRegistry(RMI_PORT);
         registry.rebind("server", server);
     }
 
